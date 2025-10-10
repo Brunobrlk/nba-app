@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/textview_home_team_name"
+        style="@style/TextAppearance.App.BodyMedium.GameInfo"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        tools:text="Atlanta Hawks"
+        app:layout_constraintEnd_toStartOf="@+id/textview_home_team_score"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textview_home_team_score"
+        style="@style/TextAppearance.App.BodyMedium.GameInfo"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        tools:text="103"
+        app:layout_constraintBaseline_toBaselineOf="@+id/textview_home_team_name"
+        app:layout_constraintEnd_toStartOf="@+id/textview_visitor_team_name"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/textview_home_team_name" />
+
+    <TextView
+        android:id="@+id/textview_visitor_team_name"
+        style="@style/TextAppearance.App.BodyMedium.GameInfo"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        tools:text="Chicago Bulls"
+        app:layout_constraintBaseline_toBaselineOf="@+id/textview_home_team_score"
+        app:layout_constraintEnd_toStartOf="@+id/textview_visitor_team_score"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/textview_home_team_score" />
+
+    <TextView
+        android:id="@+id/textview_visitor_team_score"
+        style="@style/TextAppearance.App.BodyMedium.GameInfo"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        tools:text="103"
+        app:layout_constraintBaseline_toBaselineOf="@+id/textview_visitor_team_name"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/textview_visitor_team_name" />
+</androidx.constraintlayout.widget.ConstraintLayout>

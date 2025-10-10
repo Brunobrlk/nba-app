@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_home">
+
+    <fragment
+        android:id="@+id/navigation_home"
+        android:name="com.example.nbaapp.ui.teams.TeamsFragment"
+        android:label="@string/title_home"
+        tools:layout="@layout/fragment_teams" >
+        <action
+            android:id="@+id/action_navigation_home_to_gamesBottomSheetFragment"
+            app:destination="@id/gamesBottomSheetFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_players"
+        android:name="com.example.nbaapp.ui.players.PlayersFragment"
+        android:label="@string/title_players"
+        tools:layout="@layout/fragment_players" >
+        <action
+            android:id="@+id/action_navigation_players_to_gamesBottomSheetFragment"
+            app:destination="@id/gamesBottomSheetFragment" />
+    </fragment>
+    <dialog
+        android:id="@+id/gamesBottomSheetFragment"
+        android:name="com.example.nbaapp.ui.games.GamesBottomSheetFragment"
+        android:label="GamesBottomSheetFragment" >
+        <argument
+            android:name="team_id"
+            app:argType="integer" />
+        <argument
+            android:name="team_name"
+            app:argType="string" />
+    </dialog>
+</navigation>

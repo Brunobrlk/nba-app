@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">NbaApp</string>
+    <string name="title_home">Home</string>
+    <string name="title_players">Players</string>
+    <string name="description_back">Back</string>
+    <string name="conference_label">Conference</string>
+    <string name="city_label">City</string>
+    <string name="name_label">Name</string>
+    <string name="z_a_label">Z - A</string>
+    <string name="title_order">Order</string>
+    <string name="apply_text">Apply</string>
+    <string name="sort_by_title">Sort by</string>
+    <string name="a_z_label">A - Z</string>
+    <string name="players_title">Players</string>
+    <string name="search_title">Search</string>
+    <string name="home_title">Home</string>
+    <string name="visitor_name_label">Visitor Name</string>
+    <string name="visitor_score_label">Visitor Score</string>
+    <string name="home_name_label">Home Name</string>
+    <string name="home_score_label">Home Score</string>
+    <string name="description_enter">Enter</string>
+    <string name="first_name_label">First Name</string>
+    <string name="last_name_label">Last Name</string>
+    <string name="team_label">Team</string>
+    <string name="description_illustrative_icon_for_error">Illustrative icon for error</string>
+    <string name="retry_label">Retry</string>
+</resources>
