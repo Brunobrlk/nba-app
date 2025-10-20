@@ -4,11 +4,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.nbaapp.domain.helpers.Result
 import com.example.nbaapp.domain.repository.Games
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-import com.example.nbaapp.domain.helpers.Result
 
 @HiltViewModel
 class GamesViewModel @Inject constructor(private val gamesRepository: Games) : ViewModel() {

@@ -23,28 +23,18 @@ import dagger.hilt.components.SingletonComponent
 
 @Module
 @InstallIn(SingletonComponent::class)
-abstract class BindsModule {
-    @Binds
-    abstract fun bindTeamsRepository(impl: TeamsRepository): Teams
+abstract class RepositoryModule {
+    // --- Teams
+    @Binds abstract fun bindTeamsRepository(impl: TeamsRepository): Teams
+    @Binds abstract fun bindRemoteTeamsDataSource(impl: RetrofitTeamsDataSource): RemoteTeamsDataSource
+    @Binds abstract fun bindLocalTeamsDataSource(impl: RoomTeamsDataSource): LocalTeamsDataSource
 
-    @Binds
-    abstract fun bindTeamsDataSource(impl: RetrofitTeamsDataSource): RemoteTeamsDataSource
+    // --- Players
+    @Binds abstract fun bindPlayersRepository(impl: PlayersRepository): Players
+    @Binds abstract fun bindRemotePlayersDataSource(impl: RetrofitPlayersDataSource): RemotePlayersDataSource
+    @Binds abstract fun bindLocalPlayersDataSource(impl: RoomPlayersDataSource): LocalPlayersDataSource
 
-    @Binds
-    abstract fun bindLocalTeamsDataSource(impl: RoomTeamsDataSource): LocalTeamsDataSource
-
-    @Binds
-    abstract fun bindPlayersRepository(impl: PlayersRepository): Players
-
-    @Binds
-    abstract fun bindPlayersDataSource(impl: RetrofitPlayersDataSource): RemotePlayersDataSource
-
-    @Binds
-    abstract fun bindLocalPlayersDataSource(impl: RoomPlayersDataSource): LocalPlayersDataSource
-
-    @Binds
-    abstract fun bindGamesRepository(impl: GamesRepository): Games
-
-    @Binds
-    abstract fun bindGamesDataSource(impl: RetrofitGamesDataSource): RemoteGamesDataSource
+    // --- Games
+    @Binds abstract fun bindGamesRepository(impl: GamesRepository): Games
+    @Binds abstract fun bindGamesRemoteDataSource(impl: RetrofitGamesDataSource): RemoteGamesDataSource
 }

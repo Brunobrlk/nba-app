@@ -11,12 +11,13 @@ import androidx.navigation.fragment.navArgs
 import com.example.nbaapp.R
 import com.example.nbaapp.databinding.BottomsheetGamesBinding
 import com.example.nbaapp.domain.models.Game
+import com.example.nbaapp.domain.models.GameListItem
+import com.example.nbaapp.ui.games.adapter.GamesAdapter
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.transition.MaterialSharedAxis
 import dagger.hilt.android.AndroidEntryPoint
-import kotlin.getValue
 
 @AndroidEntryPoint
 class GamesBottomSheetFragment : BottomSheetDialogFragment() {
@@ -36,14 +37,15 @@ class GamesBottomSheetFragment : BottomSheetDialogFragment() {
         val dialog = BottomSheetDialog(requireContext(), R.style.FullScreenBottomSheetDialog)
         dialog.setOnShowListener { d ->
             val d = dialog
-            val sheet = d.findViewById<FrameLayout>(com.google.android.material.R.id.design_bottom_sheet)
+            val sheet =
+                d.findViewById<FrameLayout>(com.google.android.material.R.id.design_bottom_sheet)
 
             sheet.let { bottom ->
                 // Make the sheet take the entire screen height
                 bottom!!.layoutParams.height = ViewGroup.LayoutParams.MATCH_PARENT
                 bottom.requestLayout()
 
-                val behavior = BottomSheetBehavior.from(bottom).apply {
+                BottomSheetBehavior.from(bottom).apply {
                     // Allow full expansion
                     isFitToContents = false
                     expandedOffset = 0
@@ -61,9 +63,7 @@ class GamesBottomSheetFragment : BottomSheetDialogFragment() {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         binding = BottomsheetGamesBinding.inflate(inflater, container, false)
         return binding.root
@@ -125,7 +125,6 @@ class GamesBottomSheetFragment : BottomSheetDialogFragment() {
 
     private fun initViews() {
         binding.textviewTeamTitle.text = args.teamName
-
         initRecycler()
     }
 

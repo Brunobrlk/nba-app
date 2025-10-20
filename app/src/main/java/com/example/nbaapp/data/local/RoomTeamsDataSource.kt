@@ -9,7 +9,10 @@ import com.example.nbaapp.domain.helpers.Result
 import javax.inject.Inject
 
 class RoomTeamsDataSource @Inject constructor(private val teamsDao: TeamsDao) : LocalTeamsDataSource {
-    override suspend fun getTeamsSorted(sort: SortTeamBy, isAscending: Boolean): Result<List<TeamEntity>, DataError.Local> {
+    override suspend fun getTeamsSorted(
+        sort: SortTeamBy,
+        isAscending: Boolean
+    ): Result<List<TeamEntity>, DataError.Local> {
         return try {
             val column = when (sort) {
                 SortTeamBy.NAME -> "name"

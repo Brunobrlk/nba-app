@@ -6,13 +6,20 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.paging.LoadState
+import androidx.paging.PagingData
 import androidx.transition.TransitionManager
 import com.example.nbaapp.databinding.FragmentPlayersBinding
-import com.example.nbaapp.domain.models.Player
+import com.example.nbaapp.domain.models.PlayerListItem
+import com.example.nbaapp.ui.common.adapter.LoadingAdapter
+import com.example.nbaapp.ui.players.adapter.OnPlayerClick
+import com.example.nbaapp.ui.players.adapter.PlayersAdapter
 import com.google.android.material.search.SearchView.TransitionState
 import com.google.android.material.transition.MaterialSharedAxis
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 
 @AndroidEntryPoint
@@ -21,19 +28,40 @@ class PlayersFragment : Fragment(), OnPlayerClick {
     private lateinit var playersAdapter: PlayersAdapter
     private val viewModel: PlayersViewModel by viewModels()
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         binding = FragmentPlayersBinding.inflate(inflater, container, false)
         initViews()
+        initListeners()
         return binding.root
     }
 
     private fun initViews() {
         initSearch()
-        initListeners()
         initRecyclerPlayers()
     }
 
     private fun initListeners() {
+        playersAdapter.addLoadStateListener { loadState ->
+            when(loadState.refresh) {
+                is LoadState.Loading -> showLoadingState()
+                is LoadState.Error -> showErrorState((loadState.refresh as LoadState.Error).error.localizedMessage)
+                is LoadState.NotLoading -> {
+                    binding.apply {
+                        progressBar2.visibility = View.GONE
+                        viewCustomError.root.visibility = View.GONE
+                        recyclerviewPlayers.visibility = View.VISIBLE
+                    }
+                }
+            }
+        }
+        viewModel.playersLiveData.observe(viewLifecycleOwner) { pagingData ->
+            showPlayersState(pagingData)
+        }
+
         viewModel.uiState.observe(viewLifecycleOwner) { uiState ->
             when (uiState) {
                 is PlayersUiState.Success -> showPlayersState(uiState.players)
@@ -42,10 +70,11 @@ class PlayersFragment : Fragment(), OnPlayerClick {
                     showPlayersState(uiState.cachedData)
                     showErrorState(uiState.message)
                 }
+
                 is PlayersUiState.Loading -> showLoadingState()
             }
         }
-        binding.viewCustomError.buttonRetry.setOnClickListener { viewModel.getPlayers() }
+        binding.viewCustomError.buttonRetry.setOnClickListener { playersAdapter.retry() }
         binding.viewCustomError.buttonClose.setOnClickListener {
             binding.viewCustomError.root.visibility = View.GONE
         }
@@ -59,7 +88,7 @@ class PlayersFragment : Fragment(), OnPlayerClick {
         }
     }
 
-    private fun showErrorState(message: String) {
+    private fun showErrorState(message: String?) {
         binding.apply {
             progressBar2.visibility = View.GONE
             viewCustomError.root.visibility = View.VISIBLE
@@ -67,17 +96,15 @@ class PlayersFragment : Fragment(), OnPlayerClick {
         }
     }
 
-    private fun showPlayersState(players: List<Player>) {
+    private fun showPlayersState(players: PagingData<PlayerListItem>) {
         binding.apply {
             progressBar2.visibility = View.GONE
             viewCustomError.root.visibility = View.GONE
             recyclerviewPlayers.visibility = View.VISIBLE
         }
-        val playersListItem = buildList {
-            add(PlayerListItem.Header("Players"))
-            players.forEach { add(PlayerListItem.PlayerRow(it)) }
+        viewLifecycleOwner.lifecycleScope.launch {
+            playersAdapter.submitData(players)
         }
-        playersAdapter.submitList(playersListItem)
     }
 
     private fun initSearch() {
@@ -91,7 +118,7 @@ class PlayersFragment : Fragment(), OnPlayerClick {
                 binding.textView6.visibility = View.VISIBLE
             }
         }
-        binding.searchviewPlayers.editText.setOnEditorActionListener { _, _, _ -> 
+        binding.searchviewPlayers.editText.setOnEditorActionListener { _, _, _ ->
             val query = binding.searchviewPlayers.text.toString()
             viewModel.searchPlayers(query)
             binding.searchbarPlayers.setText(query)
@@ -102,10 +129,19 @@ class PlayersFragment : Fragment(), OnPlayerClick {
 
     private fun initRecyclerPlayers() {
         playersAdapter = PlayersAdapter(this)
-        binding.recyclerviewPlayers.adapter = playersAdapter
+
+        binding.recyclerviewPlayers.adapter = playersAdapter.withLoadStateHeaderAndFooter(
+            header = LoadingAdapter(playersAdapter::retry),
+            footer = LoadingAdapter(playersAdapter::retry)
+        )
     }
 
     override fun onPlayerClick(teamId: Int, teamName: String) {
-        findNavController().navigate(PlayersFragmentDirections.actionNavigationPlayersToGamesBottomSheetFragment(teamId, teamName))
+        findNavController().navigate(
+            PlayersFragmentDirections.actionNavigationPlayersToGamesBottomSheetFragment(
+                teamId,
+                teamName
+            )
+        )
     }
 }

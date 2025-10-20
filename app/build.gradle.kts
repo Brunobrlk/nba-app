@@ -55,6 +55,7 @@ dependencies {
 
     implementation(libs.hilt.android)
     implementation(libs.androidx.recyclerview)
+    implementation(libs.androidx.paging.runtime)
     kapt(libs.hilt.android.compiler)
 
     // Retrofit
@@ -65,6 +66,9 @@ dependencies {
     // Room Database
     implementation(libs.androidx.room.ktx)
     ksp(libs.androidx.room.compiler)
+    implementation(libs.androidx.room.runtime)
+    implementation(libs.androidx.room.paging)
+
 
     // Coroutines
     implementation(libs.kotlinx.coroutines.android)

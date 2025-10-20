@@ -1,4 +1,4 @@
-package com.example.nbaapp.ui.dialogs
+package com.example.nbaapp.ui.common.dialogs
 
 import android.app.Dialog
 import android.os.Bundle
@@ -13,7 +13,7 @@ import com.example.nbaapp.databinding.DialogSortbyBinding
 import com.example.nbaapp.domain.helpers.Constants
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
-class SortByDialog: DialogFragment() {
+class SortByDialog : DialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val binding = DialogSortbyBinding.inflate(layoutInflater)
         binding.apply {
@@ -21,7 +21,7 @@ class SortByDialog: DialogFragment() {
                 dismiss()
             }
             buttonApply.setOnClickListener {
-                val sort = when(binding.toggleButton.checkedButtonId){
+                val sort = when (binding.toggleButton.checkedButtonId) {
                     R.id.button_by_name -> SortTeamBy.NAME
                     R.id.button_by_city -> SortTeamBy.CITY
                     R.id.button_by_conference -> SortTeamBy.CONFERENCE
@@ -29,19 +29,19 @@ class SortByDialog: DialogFragment() {
                     else -> SortTeamBy.NAME
                 }
 
-                val isAscending = binding.radioGroup.checkedRadioButtonId == R.id.radiobutton_ascending
+                val isAscending =
+                    binding.radioGroup.checkedRadioButtonId == R.id.radiobutton_ascending
 
-                setFragmentResult(Constants.SORT_RESULT_KEY, bundleOf(
-                    Constants.SORT_KEY to sort.name,
-                    Constants.IS_ASCENDING_KEY to isAscending
-                ))
+                setFragmentResult(
+                    Constants.SORT_RESULT_KEY, bundleOf(
+                        Constants.SORT_KEY to sort.name, Constants.IS_ASCENDING_KEY to isAscending
+                    )
+                )
                 dismiss()
             }
         }
 
-        return MaterialAlertDialogBuilder(requireActivity())
-            .setView(binding.root)
-            .create()
+        return MaterialAlertDialogBuilder(requireActivity()).setView(binding.root).create()
     }
 
     fun show(fragmentManager: FragmentManager) {

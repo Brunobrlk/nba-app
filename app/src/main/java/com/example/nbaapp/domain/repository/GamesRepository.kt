@@ -1,7 +1,7 @@
 package com.example.nbaapp.domain.repository
 
+import com.example.nbaapp.data.mappers.asDomainList
 import com.example.nbaapp.data.remote.RemoteGamesDataSource
-import com.example.nbaapp.data.remote.dtos.asDomainList
 import com.example.nbaapp.domain.helpers.DataError
 import com.example.nbaapp.domain.helpers.Result
 import com.example.nbaapp.domain.helpers.map

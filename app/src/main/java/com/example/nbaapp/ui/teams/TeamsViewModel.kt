@@ -5,11 +5,11 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.nbaapp.data.local.database.utils.SortTeamBy
+import com.example.nbaapp.domain.helpers.Result
 import com.example.nbaapp.domain.repository.Teams
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-import com.example.nbaapp.domain.helpers.Result
 
 @HiltViewModel
 class TeamsViewModel @Inject constructor(private val teamsRepository: Teams) : ViewModel() {
@@ -33,6 +33,7 @@ class TeamsViewModel @Inject constructor(private val teamsRepository: Teams) : V
                     _uiState.value = TeamsUiState.Success(teamsResult.data)
                     _currentSort.value = sort
                 }
+
                 is Result.Error -> {
                     _uiState.value = TeamsUiState.Error(teamsResult.error.toString())
                 }
@@ -40,7 +41,7 @@ class TeamsViewModel @Inject constructor(private val teamsRepository: Teams) : V
         }
     }
 
-    fun getTeams(){
+    fun getTeams() {
         viewModelScope.launch {
             _uiState.value = TeamsUiState.Loading
             val teamsResult = teamsRepository.getTeams()
@@ -48,7 +49,10 @@ class TeamsViewModel @Inject constructor(private val teamsRepository: Teams) : V
                 is Result.Success -> _uiState.value = TeamsUiState.Success(teamsResult.data)
                 is Result.Error -> {
                     if (teamsResult.cachedData != null) {
-                        _uiState.value = TeamsUiState.Warning(teamsResult.cachedData, teamsResult.error.toString())
+                        _uiState.value = TeamsUiState.Warning(
+                            teamsResult.cachedData,
+                            teamsResult.error.toString()
+                        )
                     } else {
                         _uiState.value = TeamsUiState.Error(teamsResult.error.toString())
                     }
