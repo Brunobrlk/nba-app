@@ -4,6 +4,7 @@ import androidx.paging.ExperimentalPagingApi
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import com.example.nbaapp.data.local.LocalPlayersDataSource
+import com.example.nbaapp.data.local.LocalRemoteKeysDataSource
 import com.example.nbaapp.data.local.database.entities.PlayerEntity
 import com.example.nbaapp.data.remote.RemotePlayersDataSource
 import com.example.nbaapp.domain.helpers.Constants
@@ -28,7 +29,8 @@ object AppModule {
     fun providePlayersRemoteMediator(
         remotePlayers: RemotePlayersDataSource,
         localPlayers: LocalPlayersDataSource,
-    ): PlayersRemoteMediator = PlayersRemoteMediator(remotePlayers, localPlayers)
+        localRemoteKeys: LocalRemoteKeysDataSource
+    ): PlayersRemoteMediator = PlayersRemoteMediator(remotePlayers, localPlayers, localRemoteKeys)
 
     @OptIn(ExperimentalPagingApi::class)
     @Singleton

@@ -29,7 +29,7 @@ class PlayersRepository @Inject constructor(
 
     override suspend fun searchPlayers(name: String): Result<List<Player>, DataError.Remote> {
         return withContext(ioDispatcher) {
-            remotePlayers.searchPlayers(name).map { it.asDomainList() }
+            remotePlayers.search(name).map { it.asDomainList() }
         }
     }
 

@@ -8,5 +8,5 @@ import retrofit2.http.Query
 
 interface GamesService {
     @GET("games")
-    suspend fun getGames(@Query("team_ids[]") teamId: Int): Response<ApiDataDto<List<GameDto>>>
+    suspend fun getAll(@Query("team_ids[]") teamId: Int): Response<ApiDataDto<List<GameDto>>>
 }

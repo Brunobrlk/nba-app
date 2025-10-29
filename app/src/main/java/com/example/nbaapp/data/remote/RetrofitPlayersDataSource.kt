@@ -10,15 +10,15 @@ import com.example.nbaapp.data.remote.utils.safeCall
 import com.example.nbaapp.domain.helpers.DebugUtils
 
 class RetrofitPlayersDataSource @Inject constructor(private val playersService: PlayersService) : RemotePlayersDataSource {
-    override suspend fun getPlayers(
+    override suspend fun getAll(
         cursor: Int,
         perPage: Int
     ): Result<ApiDataDto<List<PlayerDto>>, DataError.Remote> {
         DebugUtils.fakeLag(5000L)
-        return safeCall { playersService.getPlayers(cursor, perPage) }
+        return safeCall { playersService.getAll(cursor, perPage) }
     }
 
-    override suspend fun searchPlayers(name: String): Result<ApiDataDto<List<PlayerDto>>, DataError.Remote> {
-        return safeCall { playersService.searchPlayers(name) }
+    override suspend fun search(name: String): Result<ApiDataDto<List<PlayerDto>>, DataError.Remote> {
+        return safeCall { playersService.search(name) }
     }
 }

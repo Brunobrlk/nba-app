@@ -1,8 +1,10 @@
 package com.example.nbaapp.di
 
 import com.example.nbaapp.data.local.LocalPlayersDataSource
+import com.example.nbaapp.data.local.LocalRemoteKeysDataSource
 import com.example.nbaapp.data.local.LocalTeamsDataSource
 import com.example.nbaapp.data.local.RoomPlayersDataSource
+import com.example.nbaapp.data.local.RoomRemoteKeysDataSource
 import com.example.nbaapp.data.local.RoomTeamsDataSource
 import com.example.nbaapp.data.remote.RemoteGamesDataSource
 import com.example.nbaapp.data.remote.RemotePlayersDataSource
@@ -33,6 +35,9 @@ abstract class RepositoryModule {
     @Binds abstract fun bindPlayersRepository(impl: PlayersRepository): Players
     @Binds abstract fun bindRemotePlayersDataSource(impl: RetrofitPlayersDataSource): RemotePlayersDataSource
     @Binds abstract fun bindLocalPlayersDataSource(impl: RoomPlayersDataSource): LocalPlayersDataSource
+
+    // --- RemoteKeys
+    @Binds abstract fun bindRemoteKeysDataSource(impl: RoomRemoteKeysDataSource): LocalRemoteKeysDataSource
 
     // --- Games
     @Binds abstract fun bindGamesRepository(impl: GamesRepository): Games

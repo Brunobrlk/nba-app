@@ -16,7 +16,7 @@ class GamesRepository @Inject constructor(
 ) : Games {
     override suspend fun getGames(teamId: Int): Result<List<Game>, DataError.Remote> {
         return withContext(ioDispatcher) {
-            remoteGamesDataSource.getGames(teamId).map { it.asDomainList() }
+            remoteGamesDataSource.getAll(teamId).map { it.asDomainList() }
         }
     }
 }

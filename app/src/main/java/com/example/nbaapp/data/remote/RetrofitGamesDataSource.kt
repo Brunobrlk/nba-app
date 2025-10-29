@@ -9,7 +9,7 @@ import com.example.nbaapp.data.remote.utils.safeCall
 import javax.inject.Inject
 
 class RetrofitGamesDataSource @Inject constructor(private val gamesService: GamesService) : RemoteGamesDataSource {
-    override suspend fun getGames(teamId: Int): Result<ApiDataDto<List<GameDto>>, DataError.Remote> {
-        return safeCall { gamesService.getGames(teamId) }
+    override suspend fun getAll(teamId: Int): Result<ApiDataDto<List<GameDto>>, DataError.Remote> {
+        return safeCall { gamesService.getAll(teamId) }
     }
 }

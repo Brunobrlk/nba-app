@@ -7,5 +7,5 @@ import retrofit2.http.GET
 
 interface TeamsService {
     @GET("teams")
-    suspend fun getTeams(): Response<ApiDataDto<List<TeamDto>>>
+    suspend fun getAll(): Response<ApiDataDto<List<TeamDto>>>
 }

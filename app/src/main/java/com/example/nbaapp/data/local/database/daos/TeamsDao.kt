@@ -10,15 +10,15 @@ import com.example.nbaapp.data.local.database.entities.TeamEntity
 
 @Dao
 interface TeamsDao {
+    @Query("SELECT * FROM teams")
+    suspend fun getAll(): List<TeamEntity>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertTeams(teams: List<TeamEntity>)
+    suspend fun insertAll(teams: List<TeamEntity>)
 
     @Query("DELETE FROM teams")
-    suspend fun deleteAllTeams()
+    suspend fun clear()
 
     @RawQuery(observedEntities = [TeamEntity::class])
-    suspend fun getTeamsSorted(query: SupportSQLiteQuery): List<TeamEntity>
-
-    @Query("SELECT * FROM teams")
-    suspend fun getTeams(): List<TeamEntity>
+    suspend fun getAllSorted(query: SupportSQLiteQuery): List<TeamEntity>
 }

@@ -6,11 +6,11 @@ import com.example.nbaapp.data.local.database.daos.PlayersDao
 import com.example.nbaapp.data.local.database.daos.RemoteKeysDao
 import com.example.nbaapp.data.local.database.daos.TeamsDao
 import com.example.nbaapp.data.local.database.entities.PlayerEntity
-import com.example.nbaapp.data.local.database.entities.RemoteKeys
+import com.example.nbaapp.data.local.database.entities.RemoteKeyEntity
 import com.example.nbaapp.data.local.database.entities.TeamEntity
 
 @Database(
-    entities = [PlayerEntity::class, TeamEntity::class, RemoteKeys::class], version = 1, exportSchema = false
+    entities = [PlayerEntity::class, TeamEntity::class, RemoteKeyEntity::class], version = 1, exportSchema = false
 )
 
 abstract class AppDatabase : RoomDatabase() {

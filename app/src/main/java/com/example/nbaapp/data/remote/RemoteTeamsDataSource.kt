@@ -6,5 +6,5 @@ import com.example.nbaapp.domain.helpers.DataError
 import com.example.nbaapp.domain.helpers.Result
 
 interface RemoteTeamsDataSource {
-    suspend fun getTeams(): Result<ApiDataDto<List<TeamDto>>, DataError.Remote>
+    suspend fun getAll(): Result<ApiDataDto<List<TeamDto>>, DataError.Remote>
 }

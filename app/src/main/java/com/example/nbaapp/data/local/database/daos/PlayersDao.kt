@@ -9,17 +9,15 @@ import com.example.nbaapp.data.local.database.entities.PlayerEntity
 
 @Dao
 interface PlayersDao {
+    @Query("SELECT * FROM players")
+    suspend fun getAll(): List<PlayerEntity>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertPlayers(players: List<PlayerEntity>)
+    suspend fun insertAll(players: List<PlayerEntity>)
 
     @Query("DELETE FROM players")
-    fun clearAll()
-
-    @Query("SELECT * FROM players")
-    suspend fun getPlayers(): List<PlayerEntity>
+    fun clear()
 
     @Query("SELECT * FROM players")
     fun pagingSource(): PagingSource<Int, PlayerEntity>
-
-
 }

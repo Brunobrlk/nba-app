@@ -7,7 +7,6 @@ import com.example.nbaapp.data.mappers.asEntityList
 import com.example.nbaapp.data.remote.RemoteTeamsDataSource
 import com.example.nbaapp.domain.helpers.DataError
 import com.example.nbaapp.domain.helpers.Result
-import com.example.nbaapp.domain.helpers.map
 import com.example.nbaapp.domain.models.Team
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
@@ -21,22 +20,17 @@ class TeamsRepository @Inject constructor(
 ) : Teams {
     override suspend fun getTeams(): Result<List<Team>, DataError> {
         return withContext(ioDispatcher) {
-            val teamsDto = remoteTeams.getTeams()
+            val teamsDto = remoteTeams.getAll()
             when (teamsDto) {
                 is Result.Success -> {
-                    localTeams.insertTeams(teamsDto.data.asEntityList())
-                    localTeams.getTeams().map { it.asDomainList() }
+                    localTeams.insertAll(teamsDto.data.asEntityList())
+                    val teams = localTeams.getAll().asDomainList()
+                    Result.Success(teams)
                 }
 
                 is Result.Error -> {
-                    val cachedTeams = localTeams.getTeams()
-                    if (cachedTeams is Result.Success) {
-                        Result.Error(
-                            teamsDto.error, cachedTeams.data.asDomainList()
-                        )
-                    } else {
-                        Result.Error(teamsDto.error)
-                    }
+                    val cachedTeams = localTeams.getAll()
+                    Result.Error(teamsDto.error, cachedTeams.asDomainList())
                 }
             }
         }
@@ -46,7 +40,8 @@ class TeamsRepository @Inject constructor(
         sort: SortTeamBy, isAscending: Boolean
     ): Result<List<Team>, DataError.Local> {
         return withContext(ioDispatcher) {
-            localTeams.getTeamsSorted(sort, isAscending).map { it.asDomainList() }
+            val teams = localTeams.getAllSorted(sort, isAscending).asDomainList()
+            Result.Success(teams)
         }
     }
 }

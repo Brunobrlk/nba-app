@@ -4,16 +4,16 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.example.nbaapp.data.local.database.entities.RemoteKeys
+import com.example.nbaapp.data.local.database.entities.RemoteKeyEntity
 
 @Dao
 interface RemoteKeysDao {
     @Query("SELECT * FROM remote_keys WHERE label = :label")
-    suspend fun getRemoteKey(label: String): RemoteKeys
+    suspend fun get(label: String): RemoteKeyEntity
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertKey(remoteKey: RemoteKeys)
+    suspend fun insert(remoteKey: RemoteKeyEntity)
 
     @Query("DELETE FROM remote_keys WHERE label = :label")
-    suspend fun clearRemoteKey(label: String)
+    suspend fun delete(label: String)
 }

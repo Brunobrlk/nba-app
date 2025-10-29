@@ -3,9 +3,9 @@ package com.example.nbaapp.ui.common.adapter
 import androidx.core.view.isVisible
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.RecyclerView
-import com.example.nbaapp.databinding.ItemLoadStateBinding
+import com.example.nbaapp.databinding.ItemLoadingBinding
 
-class LoadingViewHolder(private val binding: ItemLoadStateBinding) :
+class LoadingViewHolder(private val binding: ItemLoadingBinding) :
     RecyclerView.ViewHolder(binding.root) {
     fun bind(loadState: LoadState, retry: () -> Unit) {
         binding.apply {
