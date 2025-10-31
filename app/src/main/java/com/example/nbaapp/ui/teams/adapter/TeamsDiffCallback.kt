@@ -8,7 +8,7 @@ object TeamsDiffCallback : DiffUtil.ItemCallback<TeamListItem>() {
         oldItem: TeamListItem, newItem: TeamListItem
     ): Boolean {
         return when {
-            oldItem is TeamListItem.Header && newItem is TeamListItem.Header -> oldItem.title == newItem.title
+            oldItem is TeamListItem.Header && newItem is TeamListItem.Header -> true
             oldItem is TeamListItem.TeamRow && newItem is TeamListItem.TeamRow -> oldItem.team.name == newItem.team.name
             else -> false
         }

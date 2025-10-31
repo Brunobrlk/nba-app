@@ -7,7 +7,7 @@
     android:minHeight="64dp">
 
     <com.google.android.material.progressindicator.CircularProgressIndicator
-        android:id="@+id/it_load_state_progress"
+        android:id="@+id/progress_indicator"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
@@ -20,14 +20,14 @@
         android:orientation="vertical">
 
         <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/it_load_state_error_text"
+            android:id="@+id/textview_error_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             tools:text="My error text" />
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/it_load_state_error_retry_button"
+            android:id="@+id/button_loading_retry"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"

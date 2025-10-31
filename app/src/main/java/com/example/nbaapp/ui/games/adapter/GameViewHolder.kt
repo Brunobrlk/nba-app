@@ -5,15 +5,16 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.nbaapp.databinding.ItemGameBinding
 import com.example.nbaapp.domain.models.Game
+import com.example.nbaapp.ui.common.setTextOrDash
 
 class GameViewHolder(private val binding: ItemGameBinding) :
     RecyclerView.ViewHolder(binding.root) {
     fun bind(game: Game) {
         binding.apply {
-            textviewHomeTeamName.text = game.homeName
-            textviewHomeTeamScore.text = game.homeScore.toString()
-            textviewVisitorTeamName.text = game.visitorName
-            textviewVisitorTeamScore.text = game.visitorScore.toString()
+            textviewHomeTeamName.setTextOrDash(game.homeName)
+            textviewHomeTeamScore.setTextOrDash(game.homeScore.toString())
+            textviewVisitorTeamName.setTextOrDash(game.visitorName)
+            textviewVisitorTeamScore.setTextOrDash(game.visitorScore.toString())
         }
     }
 

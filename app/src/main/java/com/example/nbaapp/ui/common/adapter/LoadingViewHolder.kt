@@ -10,15 +10,15 @@ class LoadingViewHolder(private val binding: ItemLoadingBinding) :
     fun bind(loadState: LoadState, retry: () -> Unit) {
         binding.apply {
             if (loadState is LoadState.Error) {
-                itLoadStateErrorText.text = loadState.error.localizedMessage
-                itLoadStateErrorRetryButton.setOnClickListener {
+                textviewErrorText.text = loadState.error.localizedMessage
+                buttonLoadingRetry.setOnClickListener {
                     retry()
                 }
             }
 
-            itLoadStateProgress.isVisible = loadState is LoadState.Loading
-            itLoadStateErrorRetryButton.isVisible = loadState is LoadState.Error
-            itLoadStateErrorText.isVisible = loadState is LoadState.Error
+            progressIndicator.isVisible = loadState is LoadState.Loading
+            buttonLoadingRetry.isVisible = loadState is LoadState.Error
+            textviewErrorText.isVisible = loadState is LoadState.Error
         }
     }
 }

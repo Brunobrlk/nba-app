@@ -6,11 +6,11 @@ import com.example.nbaapp.data.local.database.entities.TeamEntity
 import com.example.nbaapp.data.local.database.utils.SortTeamBy
 import javax.inject.Inject
 
-class RoomTeamsDataSource @Inject constructor(private val teamsDao: TeamsDao) :
-    LocalTeamsDataSource {
+class RoomTeamsDataSource @Inject constructor(
+    private val teamsDao: TeamsDao
+) : LocalTeamsDataSource {
     override suspend fun getAllSorted(
-        sort: SortTeamBy,
-        isAscending: Boolean
+        sort: SortTeamBy, isAscending: Boolean
     ): List<TeamEntity> {
         val column = when (sort) {
             SortTeamBy.NAME -> "name"
@@ -19,7 +19,14 @@ class RoomTeamsDataSource @Inject constructor(private val teamsDao: TeamsDao) :
         }
 
         val order = if (isAscending) "ASC" else "DESC"
-        val query = SimpleSQLiteQuery("SELECT * FROM teams ORDER BY $column $order")
+        val query = SimpleSQLiteQuery(
+            """
+            SELECT * FROM teams 
+            ORDER BY 
+                CASE WHEN TRIM($column) = '' OR $column IS NULL THEN 1 ELSE 0 END,
+                $column $order
+            """
+        )
         return teamsDao.getAllSorted(query)
     }
 

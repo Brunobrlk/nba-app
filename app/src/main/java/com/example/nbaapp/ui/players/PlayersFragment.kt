@@ -39,16 +39,72 @@ class PlayersFragment : Fragment(), OnPlayerClick {
         return binding.root
     }
 
+    override fun onPlayerClick(teamId: Int, teamName: String) =
+        findNavController().navigate(PlayersFragmentDirections.actionNavigationPlayersToGamesBottomSheetFragment(teamId, teamName))
+
     private fun initViews() {
         initSearch()
         initRecyclerPlayers()
     }
 
     private fun initListeners() {
+        viewModel.apply {
+            players.observe(viewLifecycleOwner) { pagingData ->
+                showPlayersState(pagingData)
+            }
+
+            uiState.observe(viewLifecycleOwner) { uiState ->
+                when (uiState) {
+                    is PlayersUiState.Success -> showPlayersState(uiState.players)
+                    is PlayersUiState.Error -> showErrorState(uiState.message)
+                    is PlayersUiState.Warning -> showWarningState(uiState.cache, uiState.message)
+                    is PlayersUiState.Loading -> showLoadingState()
+                }
+            }
+        }
+        binding.apply {
+            viewCustomError.buttonRetry.setOnClickListener { playersAdapter.retry() }
+            viewCustomError.buttonClose.setOnClickListener {
+                binding.viewCustomError.root.visibility = View.GONE
+            }
+        }
+    }
+
+    private fun initSearch() {
+        binding.searchviewPlayers.apply {
+            addTransitionListener { searchView, previousState, newState ->
+                if (newState === TransitionState.SHOWING) {
+                    binding.textView6.visibility = View.GONE
+                }
+                if (newState === TransitionState.HIDDEN) {
+                    val transition = MaterialSharedAxis(MaterialSharedAxis.Y, false)
+                    TransitionManager.beginDelayedTransition(binding.root, transition)
+                    binding.textView6.visibility = View.VISIBLE
+                }
+            }
+            editText.setOnEditorActionListener { _, _, _ ->
+                val query = binding.searchviewPlayers.text.toString()
+                viewModel.searchPlayers(query)
+                binding.searchbarPlayers.setText(query)
+                binding.searchviewPlayers.hide()
+                true
+            }
+        }
+    }
+
+    private fun initRecyclerPlayers() {
+        playersAdapter = PlayersAdapter(this)
+
         playersAdapter.addLoadStateListener { loadState ->
             when(loadState.refresh) {
-                is LoadState.Loading -> showLoadingState()
-                is LoadState.Error -> showErrorState((loadState.refresh as LoadState.Error).error.localizedMessage)
+                is LoadState.Loading -> {
+                    showLoadingState()
+                }
+                is LoadState.Error -> {
+                    val error = (loadState.refresh as LoadState.Error).error
+                    val uiMessage = viewModel.mapPagingError(error)
+                    showErrorState(uiMessage)
+                }
                 is LoadState.NotLoading -> {
                     binding.apply {
                         progressBar2.visibility = View.GONE
@@ -58,26 +114,11 @@ class PlayersFragment : Fragment(), OnPlayerClick {
                 }
             }
         }
-        viewModel.playersLiveData.observe(viewLifecycleOwner) { pagingData ->
-            showPlayersState(pagingData)
-        }
 
-        viewModel.uiState.observe(viewLifecycleOwner) { uiState ->
-            when (uiState) {
-                is PlayersUiState.Success -> showPlayersState(uiState.players)
-                is PlayersUiState.Error -> showErrorState(uiState.message)
-                is PlayersUiState.Warning -> {
-                    showPlayersState(uiState.cachedData)
-                    showErrorState(uiState.message)
-                }
-
-                is PlayersUiState.Loading -> showLoadingState()
-            }
-        }
-        binding.viewCustomError.buttonRetry.setOnClickListener { playersAdapter.retry() }
-        binding.viewCustomError.buttonClose.setOnClickListener {
-            binding.viewCustomError.root.visibility = View.GONE
-        }
+        binding.recyclerviewPlayers.adapter = playersAdapter.withLoadStateHeaderAndFooter(
+            header = LoadingAdapter(playersAdapter::retry),
+            footer = LoadingAdapter(playersAdapter::retry)
+        )
     }
 
     private fun showLoadingState() {
@@ -107,41 +148,8 @@ class PlayersFragment : Fragment(), OnPlayerClick {
         }
     }
 
-    private fun initSearch() {
-        binding.searchviewPlayers.addTransitionListener { searchView, previousState, newState ->
-            if (newState === TransitionState.SHOWING) {
-                binding.textView6.visibility = View.GONE
-            }
-            if (newState === TransitionState.HIDDEN) {
-                val transition = MaterialSharedAxis(MaterialSharedAxis.Y, false)
-                TransitionManager.beginDelayedTransition(binding.root, transition)
-                binding.textView6.visibility = View.VISIBLE
-            }
-        }
-        binding.searchviewPlayers.editText.setOnEditorActionListener { _, _, _ ->
-            val query = binding.searchviewPlayers.text.toString()
-            viewModel.searchPlayers(query)
-            binding.searchbarPlayers.setText(query)
-            binding.searchviewPlayers.hide()
-            true
-        }
-    }
-
-    private fun initRecyclerPlayers() {
-        playersAdapter = PlayersAdapter(this)
-
-        binding.recyclerviewPlayers.adapter = playersAdapter.withLoadStateHeaderAndFooter(
-            header = LoadingAdapter(playersAdapter::retry),
-            footer = LoadingAdapter(playersAdapter::retry)
-        )
-    }
-
-    override fun onPlayerClick(teamId: Int, teamName: String) {
-        findNavController().navigate(
-            PlayersFragmentDirections.actionNavigationPlayersToGamesBottomSheetFragment(
-                teamId,
-                teamName
-            )
-        )
+    private fun showWarningState(cache: PagingData<PlayerListItem>, message: String) {
+        showPlayersState(cache)
+        showErrorState(message)
     }
 }

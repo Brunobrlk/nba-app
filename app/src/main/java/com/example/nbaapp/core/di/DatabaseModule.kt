@@ -1,9 +1,9 @@
-package com.example.nbaapp.di
+package com.example.nbaapp.core.di
 
 import android.content.Context
 import androidx.room.Room
 import com.example.nbaapp.data.local.database.AppDatabase
-import com.example.nbaapp.domain.helpers.Constants
+import com.example.nbaapp.core.helpers.Constants
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -21,10 +21,10 @@ object DatabaseModule {
             .fallbackToDestructiveMigration(true).build()
 
     @Provides
-    fun provideTeamsDao(db: AppDatabase) = db.getTeamDao()
+    fun provideTeamsDao(db: AppDatabase) = db.getTeamsDao()
 
     @Provides
-    fun providePlayersDao(db: AppDatabase) = db.getPlayerDao()
+    fun providePlayersDao(db: AppDatabase) = db.getPlayersDao()
 
     @Provides
     fun provideRemoteKeysDao(db: AppDatabase) = db.getRemoteKeysDao()

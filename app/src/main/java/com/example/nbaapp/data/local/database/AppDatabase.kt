@@ -14,7 +14,7 @@ import com.example.nbaapp.data.local.database.entities.TeamEntity
 )
 
 abstract class AppDatabase : RoomDatabase() {
-    abstract fun getPlayerDao(): PlayersDao
-    abstract fun getTeamDao(): TeamsDao
+    abstract fun getPlayersDao(): PlayersDao
+    abstract fun getTeamsDao(): TeamsDao
     abstract fun getRemoteKeysDao(): RemoteKeysDao
 }

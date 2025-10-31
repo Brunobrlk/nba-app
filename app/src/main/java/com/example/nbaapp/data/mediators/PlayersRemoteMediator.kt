@@ -10,8 +10,8 @@ import com.example.nbaapp.data.local.database.entities.PlayerEntity
 import com.example.nbaapp.data.local.database.entities.RemoteKeyEntity
 import com.example.nbaapp.data.mappers.asEntityList
 import com.example.nbaapp.data.remote.RemotePlayersDataSource
-import com.example.nbaapp.domain.helpers.Constants
-import com.example.nbaapp.domain.helpers.getOrElse
+import com.example.nbaapp.core.helpers.Constants
+import com.example.nbaapp.core.helpers.getOrElse
 import javax.inject.Inject
 
 @OptIn(ExperimentalPagingApi::class)
@@ -31,18 +31,19 @@ class PlayersRemoteMediator @Inject constructor(
                 remoteKey.nextCursor ?: return MediatorResult.Success(endOfPaginationReached = true)
             }
         }
-        val result = remotePlayers.getAll(cursor, state.config.pageSize).getOrElse {
-            return MediatorResult.Error(Exception(it.name))
+        val result = remotePlayers.getAll(cursor, state.config.pageSize).getOrElse { error ->
+            return MediatorResult.Error(DataErrorException(error))
         }
-        val players = result.asEntityList()
-        val meta = result.meta
 
         if (loadType == LoadType.REFRESH) {
             localPlayers.clear()
             localKeys.delete(Constants.REMOTE_KEYS_PLAYERS)
         }
 
+        val players = result.asEntityList()
         localPlayers.insertAll(players)
+
+        val meta = result.meta
         val previousCursor = meta.previousCursor
         val nextCursor = meta.nextCursor
         val remoteKey = RemoteKeyEntity(Constants.REMOTE_KEYS_PLAYERS, previousCursor, nextCursor)

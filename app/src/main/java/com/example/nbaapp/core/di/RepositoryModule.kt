@@ -1,4 +1,4 @@
-package com.example.nbaapp.di
+package com.example.nbaapp.core.di
 
 import com.example.nbaapp.data.local.LocalPlayersDataSource
 import com.example.nbaapp.data.local.LocalRemoteKeysDataSource

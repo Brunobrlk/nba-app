@@ -7,7 +7,7 @@ object GamesDiffCallback : DiffUtil.ItemCallback<GameListItem>() {
     override fun areItemsTheSame(
         oldItem: GameListItem, newItem: GameListItem
     ) = when {
-        oldItem is GameListItem.Header && newItem is GameListItem.Header -> oldItem.title == newItem.title
+        oldItem is GameListItem.Header && newItem is GameListItem.Header -> true
         oldItem is GameListItem.GameRow && newItem is GameListItem.GameRow -> oldItem.game.homeName == newItem.game.homeName
         else -> false
     }

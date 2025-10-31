@@ -15,8 +15,8 @@ class LoadingAdapter(private val retry: () -> Unit) :
     override fun onCreateViewHolder(
         parent: ViewGroup, loadState: LoadState
     ): LoadingViewHolder {
-        val binding =
-            ItemLoadingBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val inflater = LayoutInflater.from(parent.context)
+        val binding = ItemLoadingBinding.inflate(inflater, parent, false)
         return LoadingViewHolder(binding)
     }
 }

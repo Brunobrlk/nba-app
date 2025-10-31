@@ -43,20 +43,36 @@ android {
 }
 
 dependencies {
-
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
-    implementation(libs.androidx.constraintlayout)
-    implementation(libs.androidx.lifecycle.livedata.ktx)
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
+    implementation(libs.androidx.recyclerview)
+
+    // Navigation
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
 
+    // LiveData
+    implementation(libs.androidx.lifecycle.livedata.ktx)
+
+    // ConstraintLayout
+    implementation(libs.androidx.constraintlayout)
+
+    // ProcessLifecycle
+    implementation(libs.androidx.lifecycle.process)
+
+    // Startup
+    implementation(libs.androidx.startup.runtime)
+
+    // Hilt
     implementation(libs.hilt.android)
-    implementation(libs.androidx.recyclerview)
-    implementation(libs.androidx.paging.runtime)
     kapt(libs.hilt.android.compiler)
+
+    // WorkManager
+    implementation(libs.androidx.work.runtime.ktx)
+    implementation(libs.androidx.hilt.work)
+    kapt(libs.androidx.hilt.compiler)
 
     // Retrofit
     implementation(libs.retrofit)
@@ -64,19 +80,17 @@ dependencies {
     implementation(libs.logging.interceptor)
 
     // Room Database
+    implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx)
     ksp(libs.androidx.room.compiler)
-    implementation(libs.androidx.room.runtime)
-    implementation(libs.androidx.room.paging)
 
+    // Paging
+    implementation(libs.androidx.paging.runtime)
+    implementation(libs.androidx.room.paging)
 
     // Coroutines
     implementation(libs.kotlinx.coroutines.android)
     implementation(libs.kotlinx.coroutines.core)
-    
-    // Kotlin Extensions and Coroutines support for Room
-    implementation(libs.androidx.room.ktx)
-    
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

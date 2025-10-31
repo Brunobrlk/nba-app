@@ -10,8 +10,8 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.example.nbaapp.R
 import com.example.nbaapp.databinding.BottomsheetGamesBinding
-import com.example.nbaapp.domain.models.Game
 import com.example.nbaapp.domain.models.GameListItem
+import com.example.nbaapp.ui.common.setTextOrDash
 import com.example.nbaapp.ui.games.adapter.GamesAdapter
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -79,8 +79,6 @@ class GamesBottomSheetFragment : BottomSheetDialogFragment() {
     }
 
     private fun initListeners() {
-        binding.buttonReturn.setOnClickListener { dismiss() }
-
         viewModel.uiState.observe(viewLifecycleOwner) { uiState ->
             when (uiState) {
                 is GamesUiState.Success -> showGamesState(uiState.games)
@@ -89,8 +87,11 @@ class GamesBottomSheetFragment : BottomSheetDialogFragment() {
             }
         }
 
-        binding.viewCustomError.buttonRetry.setOnClickListener { viewModel.loadGames(args.teamId) }
-        binding.viewCustomError.buttonClose.setOnClickListener { dismiss() }
+        binding.apply {
+            buttonReturn.setOnClickListener { dismiss() }
+            viewCustomError.buttonRetry.setOnClickListener { viewModel.loadGames(args.teamId) }
+            viewCustomError.buttonClose.setOnClickListener { dismiss() }
+        }
     }
 
     private fun showLoadingState() {
@@ -110,25 +111,21 @@ class GamesBottomSheetFragment : BottomSheetDialogFragment() {
         }
     }
 
-    private fun showGamesState(games: List<Game>) {
+    private fun showGamesState(games: List<GameListItem>) {
         binding.apply {
             progressBar3.visibility = View.GONE
             recyclerviewGames.visibility = View.VISIBLE
             viewCustomError.root.visibility = View.GONE
         }
-        val gamesListItem = buildList {
-            add(GameListItem.Header("Games"))
-            games.forEach { add(GameListItem.GameRow(it)) }
-        }
-        gamesAdapter.submitList(gamesListItem)
+        gamesAdapter.submitList(games)
     }
 
     private fun initViews() {
-        binding.textviewTeamTitle.text = args.teamName
-        initRecycler()
+        binding.textviewTeamTitle.setTextOrDash(args.teamName)
+        initRecyclerGames()
     }
 
-    private fun initRecycler() {
+    private fun initRecyclerGames() {
         gamesAdapter = GamesAdapter()
         binding.recyclerviewGames.adapter = gamesAdapter
     }

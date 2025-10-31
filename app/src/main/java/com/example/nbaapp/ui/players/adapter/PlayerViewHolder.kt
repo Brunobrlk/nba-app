@@ -5,14 +5,15 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.nbaapp.databinding.ItemPlayerBinding
 import com.example.nbaapp.domain.models.Player
+import com.example.nbaapp.ui.common.setTextOrDash
 
 class PlayerViewHolder(private val binding: ItemPlayerBinding) :
     RecyclerView.ViewHolder(binding.root) {
     fun bind(item: Player, onTeamClick: OnPlayerClick) {
         binding.apply {
-            textviewCol1Item.text = item.firstName
-            textviewCol2Item.text = item.lastName
-            textviewCol3Item.text = item.teamName
+            textviewCol1Item.setTextOrDash(item.firstName)
+            textviewCol2Item.setTextOrDash(item.lastName)
+            textviewCol3Item.setTextOrDash(item.teamName)
             buttonOpen.setOnClickListener {
                 onTeamClick.onPlayerClick(item.teamId, item.teamName)
             }

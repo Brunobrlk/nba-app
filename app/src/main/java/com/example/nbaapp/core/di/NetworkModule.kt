@@ -1,10 +1,10 @@
-package com.example.nbaapp.di
+package com.example.nbaapp.core.di
 
 import com.example.nbaapp.data.remote.AuthInterceptor
 import com.example.nbaapp.data.remote.services.GamesService
 import com.example.nbaapp.data.remote.services.PlayersService
 import com.example.nbaapp.data.remote.services.TeamsService
-import com.example.nbaapp.domain.helpers.Constants
+import com.example.nbaapp.core.helpers.Constants
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

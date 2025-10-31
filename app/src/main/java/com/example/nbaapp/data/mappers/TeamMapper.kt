@@ -9,9 +9,9 @@ import com.example.nbaapp.domain.models.Team
 // --- Dto to Domain
 fun TeamDto.asDomainModel() = Team(
     id = this.id,
-    name = this.name,
-    city = this.city,
-    conference = this.conference
+    name = normalizeBlank(this.name),
+    city = normalizeBlank(this.city),
+    conference = normalizeBlank(this.conference)
 )
 
 fun ApiDataDto<List<TeamDto>>.asDomainList() = this.data.map { it.asDomainModel() }
@@ -29,9 +29,9 @@ fun ApiDataDto<List<TeamDto>>.asEntityList() = this.data.map { it.asEntityModel(
 // --- Entity to Domain
 fun TeamEntity.asDomainModel() = Team(
     id = this.id,
-    name = this.name,
-    city = this.city,
-    conference = this.conference
+    name = normalizeBlank(this.name),
+    city = normalizeBlank(this.city),
+    conference = normalizeBlank(this.conference)
 )
 
 fun List<TeamEntity>.asDomainList() = map { it.asDomainModel() }

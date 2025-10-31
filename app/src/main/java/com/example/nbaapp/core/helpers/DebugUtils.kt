@@ -1,4 +1,4 @@
-package com.example.nbaapp.domain.helpers
+package com.example.nbaapp.core.helpers
 
 import android.content.Context
 import android.util.Log

@@ -33,6 +33,7 @@
             app:argType="integer" />
         <argument
             android:name="team_name"
-            app:argType="string" />
+            app:argType="string"
+            app:nullable="true" />
     </dialog>
 </navigation>
