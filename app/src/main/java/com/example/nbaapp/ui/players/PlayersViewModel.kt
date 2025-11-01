@@ -17,7 +17,7 @@ import com.example.nbaapp.data.mediators.DataErrorException
 import com.example.nbaapp.domain.models.Player
 import com.example.nbaapp.domain.models.PlayerListItem
 import com.example.nbaapp.domain.repository.Players
-import com.example.nbaapp.ui.common.ErrorMessageMapper
+import com.example.nbaapp.ui.common.ErrorMapper
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
@@ -25,7 +25,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class PlayersViewModel @Inject constructor(
-    private val playersRepository: Players, private val errorMessageMapper: ErrorMessageMapper
+    private val playersRepository: Players, private val errorMapper: ErrorMapper
 ) : ViewModel() {
     private val _uiState = MutableLiveData<PlayersUiState>()
     val uiState: LiveData<PlayersUiState> = _uiState
@@ -33,8 +33,7 @@ class PlayersViewModel @Inject constructor(
     val players = playersRepository.getPlayersPaging()
         .map { paging -> paging.map<Player, PlayerListItem> { toListItem(it) } }
         .map { it.insertHeaderItem(TerminalSeparatorType.SOURCE_COMPLETE, PlayerListItem.Header) }
-        .cachedIn(viewModelScope)
-        .asLiveData(viewModelScope.coroutineContext)
+        .cachedIn(viewModelScope).asLiveData(viewModelScope.coroutineContext)
 
     private fun toListItem(player: Player) = PlayerListItem.PlayerRow(player)
 
@@ -46,15 +45,14 @@ class PlayersViewModel @Inject constructor(
                 val pagingData = PagingData.from(playersList)
                 _uiState.value = PlayersUiState.Success(pagingData)
             }.onFailure { error ->
-                _uiState.value = PlayersUiState.Error(errorMessageMapper.toUiMessage(error))
+                _uiState.value = PlayersUiState.Error(errorMapper.toUiMessage(error))
             }
         }
     }
 
-    fun mapPagingError(error: Throwable) = if (error is DataErrorException) {
-        errorMessageMapper.toUiMessage(error.dataError)
-    } else {
-        errorMessageMapper.toUiMessage(DataError.Remote.UNKNOWN)
+    fun mapPagingError(error: Throwable) = when (error) {
+        is DataErrorException -> errorMapper.toUiMessage(error.dataError)
+        else -> errorMapper.toUiMessage(DataError.Remote.UNKNOWN)
     }
 
     private fun getPlayersList(players: List<Player>): List<PlayerListItem> {

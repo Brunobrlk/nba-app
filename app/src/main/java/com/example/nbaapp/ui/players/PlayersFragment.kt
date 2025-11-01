@@ -11,12 +11,15 @@ import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import androidx.paging.PagingData
 import androidx.transition.TransitionManager
+import com.example.nbaapp.R
+import com.example.nbaapp.core.helpers.DebugUtils
 import com.example.nbaapp.databinding.FragmentPlayersBinding
 import com.example.nbaapp.domain.models.PlayerListItem
 import com.example.nbaapp.ui.common.adapter.LoadingAdapter
 import com.example.nbaapp.ui.players.adapter.OnPlayerClick
 import com.example.nbaapp.ui.players.adapter.PlayersAdapter
 import com.google.android.material.search.SearchView.TransitionState
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.transition.MaterialSharedAxis
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -50,14 +53,27 @@ class PlayersFragment : Fragment(), OnPlayerClick {
     private fun initListeners() {
         viewModel.apply {
             players.observe(viewLifecycleOwner) { pagingData ->
-                showPlayersState(pagingData)
+                showPlayersState()
+                viewLifecycleOwner.lifecycleScope.launch {
+                    playersAdapter.submitData(pagingData)
+                }
             }
 
             uiState.observe(viewLifecycleOwner) { uiState ->
                 when (uiState) {
-                    is PlayersUiState.Success -> showPlayersState(uiState.players)
+                    is PlayersUiState.Success -> {
+                        showPlayersState()
+                        viewLifecycleOwner.lifecycleScope.launch {
+                            playersAdapter.submitData(uiState.players)
+                        }
+                    }
                     is PlayersUiState.Error -> showErrorState(uiState.message)
-                    is PlayersUiState.Warning -> showWarningState(uiState.cache, uiState.message)
+                    is PlayersUiState.Warning -> {
+                        showWarningState(uiState.message)
+                        viewLifecycleOwner.lifecycleScope.launch {
+                            playersAdapter.submitData(uiState.cache)
+                        }
+                    }
                     is PlayersUiState.Loading -> showLoadingState()
                 }
             }
@@ -99,31 +115,96 @@ class PlayersFragment : Fragment(), OnPlayerClick {
             when(loadState.refresh) {
                 is LoadState.Loading -> {
                     showLoadingState()
+                    DebugUtils.reportDebug("refresh loading")
                 }
                 is LoadState.Error -> {
                     val error = (loadState.refresh as LoadState.Error).error
                     val uiMessage = viewModel.mapPagingError(error)
-                    showErrorState(uiMessage)
+                    if(playersAdapter.itemCount>0){
+                        showWarningState(uiMessage)
+                    } else {
+                        showErrorState(uiMessage)
+                    }
+                    DebugUtils.reportDebug("refresh error")
                 }
                 is LoadState.NotLoading -> {
-                    binding.apply {
-                        progressBar2.visibility = View.GONE
-                        viewCustomError.root.visibility = View.GONE
-                        recyclerviewPlayers.visibility = View.VISIBLE
-                    }
+                    showPlayersState()
+                    DebugUtils.reportDebug("refresh not loading")
+                }
+            }
+            when(loadState.append){
+                is LoadState.Loading -> {
+                    DebugUtils.reportDebug("append loading")
+                }
+
+                is LoadState.Error -> {
+                    DebugUtils.reportDebug("append error")
+                }
+                is LoadState.NotLoading -> {
+                    DebugUtils.reportDebug("append not loading")
+                }
+            }
+            when(loadState.prepend){
+                is LoadState.Error -> {
+                    DebugUtils.reportDebug("prepend error")
+                }
+                LoadState.Loading -> {
+                    DebugUtils.reportDebug("prepend loading")
+                }
+                is LoadState.NotLoading -> {
+                    DebugUtils.reportDebug("prepend not loading")
+                }
+            }
+            when(loadState.source.refresh){
+                is LoadState.Error -> {
+                    DebugUtils.reportDebug("refresh source error")
+                }
+                LoadState.Loading -> {
+                    DebugUtils.reportDebug("refresh source loading")
+                }
+                is LoadState.NotLoading -> {
+                    DebugUtils.reportDebug("refresh source not loading")
+                }
+            }
+            when(loadState.source.append){
+                is LoadState.Error -> {
+                    DebugUtils.reportDebug("append source error")
+                }
+                LoadState.Loading -> {
+                    DebugUtils.reportDebug("append source loading")
+                }
+                is LoadState.NotLoading -> {
+                    DebugUtils.reportDebug("append source not loading")
+                }
+            }
+            when(loadState.source.prepend){
+                is LoadState.Error -> {
+                    DebugUtils.reportDebug("prepend source error")
+                }
+                LoadState.Loading -> {
+                    DebugUtils.reportDebug("prepend source loading")
+                }
+                is LoadState.NotLoading -> {
+                    DebugUtils.reportDebug("prepend source not loading")
                 }
             }
         }
 
         binding.recyclerviewPlayers.adapter = playersAdapter.withLoadStateHeaderAndFooter(
-            header = LoadingAdapter(playersAdapter::retry),
-            footer = LoadingAdapter(playersAdapter::retry)
+            header = LoadingAdapter(playersAdapter::retry, viewModel::mapPagingError),
+            footer = LoadingAdapter(playersAdapter::retry, viewModel::mapPagingError)
         )
     }
-
+    private fun showWarning(message: String) {
+        val snackbarMsg = getString(R.string.combined_msg_offline_mode, message)
+        Snackbar
+            .make(binding.root, snackbarMsg, Snackbar.LENGTH_INDEFINITE)
+            .setAction("Retry") { playersAdapter.retry() }
+            .show()
+    }
     private fun showLoadingState() {
         binding.apply {
-            progressBar2.visibility = View.VISIBLE
+            loadingIndicatorPlayers.visibility = View.VISIBLE
             recyclerviewPlayers.visibility = View.GONE
             viewCustomError.root.visibility = View.GONE
         }
@@ -131,25 +212,23 @@ class PlayersFragment : Fragment(), OnPlayerClick {
 
     private fun showErrorState(message: String?) {
         binding.apply {
-            progressBar2.visibility = View.GONE
+            loadingIndicatorPlayers.visibility = View.GONE
             viewCustomError.root.visibility = View.VISIBLE
             viewCustomError.textErrorMessage.text = message
         }
     }
 
-    private fun showPlayersState(players: PagingData<PlayerListItem>) {
+    private fun showPlayersState() {
         binding.apply {
-            progressBar2.visibility = View.GONE
+            loadingIndicatorPlayers.visibility = View.GONE
             viewCustomError.root.visibility = View.GONE
             recyclerviewPlayers.visibility = View.VISIBLE
         }
-        viewLifecycleOwner.lifecycleScope.launch {
-            playersAdapter.submitData(players)
-        }
     }
 
-    private fun showWarningState(cache: PagingData<PlayerListItem>, message: String) {
-        showPlayersState(cache)
+    private fun showWarningState(message: String) {
+        showWarning(message)
+        showPlayersState()
         showErrorState(message)
     }
 }

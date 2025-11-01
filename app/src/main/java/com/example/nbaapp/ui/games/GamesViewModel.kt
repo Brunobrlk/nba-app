@@ -9,7 +9,7 @@ import com.example.nbaapp.core.helpers.onSuccess
 import com.example.nbaapp.domain.models.Game
 import com.example.nbaapp.domain.models.GameListItem
 import com.example.nbaapp.domain.repository.Games
-import com.example.nbaapp.ui.common.ErrorMessageMapper
+import com.example.nbaapp.ui.common.ErrorMapper
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -18,7 +18,7 @@ import kotlin.collections.forEach
 @HiltViewModel
 class GamesViewModel @Inject constructor(
     private val gamesRepository: Games,
-    private val errorMessageMapper: ErrorMessageMapper
+    private val errorMapper: ErrorMapper
 ) : ViewModel() {
     private val _uiState = MutableLiveData<GamesUiState>()
     val uiState: LiveData<GamesUiState> = _uiState
@@ -28,7 +28,7 @@ class GamesViewModel @Inject constructor(
         viewModelScope.launch {
             gamesRepository.getAll(teamId)
                 .onSuccess { games -> _uiState.value = GamesUiState.Success(getGamesList(games)) }
-                .onFailure { error -> _uiState.value = GamesUiState.Error(errorMessageMapper.toUiMessage(error)) }
+                .onFailure { error -> _uiState.value = GamesUiState.Error(errorMapper.toUiMessage(error)) }
         }
     }
 

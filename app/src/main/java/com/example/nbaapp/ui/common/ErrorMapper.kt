@@ -1,7 +1,6 @@
 package com.example.nbaapp.ui.common
 
 import android.content.Context
-import androidx.annotation.StringRes
 import com.example.nbaapp.R
 import com.example.nbaapp.core.helpers.DataError
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -10,7 +9,7 @@ import javax.inject.Singleton
 
 
 @Singleton
-class ErrorMessageMapper @Inject constructor(
+class ErrorMapper @Inject constructor(
     @param:ApplicationContext private val context: Context
 ) {
     fun toUiMessage(error: DataError): String {

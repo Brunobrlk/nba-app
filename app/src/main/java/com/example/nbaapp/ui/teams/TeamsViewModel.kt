@@ -11,7 +11,7 @@ import com.example.nbaapp.data.local.database.utils.SortTeamBy
 import com.example.nbaapp.domain.models.Team
 import com.example.nbaapp.domain.models.TeamListItem
 import com.example.nbaapp.domain.repository.Teams
-import com.example.nbaapp.ui.common.ErrorMessageMapper
+import com.example.nbaapp.ui.common.ErrorMapper
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -19,7 +19,7 @@ import kotlin.collections.forEach
 
 @HiltViewModel
 class TeamsViewModel @Inject constructor(
-    private val teamsRepository: Teams, private val errorMessageMapper: ErrorMessageMapper
+    private val teamsRepository: Teams, private val errorMapper: ErrorMapper
 ) : ViewModel() {
 
     private val _uiState = MutableLiveData<TeamsUiState>()
@@ -38,7 +38,7 @@ class TeamsViewModel @Inject constructor(
             teamsRepository.getAllOrdered(sort, isAscending).onSuccess { teams ->
                 _uiState.value = TeamsUiState.Success(getTeamsListItem(teams))
             }.onFailure {
-                _uiState.value = TeamsUiState.Error(errorMessageMapper.toUiMessage(it))
+                _uiState.value = TeamsUiState.Error(errorMapper.toUiMessage(it))
             }
         }
     }
@@ -49,7 +49,7 @@ class TeamsViewModel @Inject constructor(
             teamsRepository.getAll().onSuccess { teams ->
                 _uiState.value = TeamsUiState.Success(getTeamsListItem(teams))
             }.onFailureWithCache { error, cachedTeams ->
-                val uiError = errorMessageMapper.toUiMessage(error)
+                val uiError = errorMapper.toUiMessage(error)
                 _uiState.value = if (cachedTeams.isNullOrEmpty()) TeamsUiState.Error(uiError)
                 else TeamsUiState.Warning(getTeamsListItem(cachedTeams), uiError)
             }

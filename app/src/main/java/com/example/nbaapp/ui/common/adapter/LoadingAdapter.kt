@@ -6,10 +6,10 @@ import androidx.paging.LoadState
 import androidx.paging.LoadStateAdapter
 import com.example.nbaapp.databinding.ItemLoadingBinding
 
-class LoadingAdapter(private val retry: () -> Unit) :
+class LoadingAdapter(private val retry: () -> Unit, private val mapError: (Throwable) -> String) :
     LoadStateAdapter<LoadingViewHolder>() {
     override fun onBindViewHolder(holder: LoadingViewHolder, loadState: LoadState) {
-        holder.bind(loadState, retry)
+        holder.bind(loadState, retry, mapError)
     }
 
     override fun onCreateViewHolder(

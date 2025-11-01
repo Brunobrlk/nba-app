@@ -84,7 +84,7 @@ class TeamsFragment : Fragment(), OnTeamClick {
 
     private fun showTeamsState(teams: List<TeamListItem>) {
         binding.apply {
-            progressBar.visibility = View.GONE
+            loadingIndicatorTeams.visibility = View.GONE
             recyclerviewTeams.visibility = View.VISIBLE
             viewCustomError.root.visibility = View.GONE
         }
@@ -93,7 +93,7 @@ class TeamsFragment : Fragment(), OnTeamClick {
 
     private fun showLoadingState() {
         binding.apply {
-            progressBar.visibility = View.VISIBLE
+            loadingIndicatorTeams.visibility = View.VISIBLE
             recyclerviewTeams.visibility = View.GONE
             viewCustomError.root.visibility = View.GONE
         }
@@ -101,7 +101,7 @@ class TeamsFragment : Fragment(), OnTeamClick {
 
     private fun showErrorState(message: String) {
         binding.apply {
-            progressBar.visibility = View.GONE
+            loadingIndicatorTeams.visibility = View.GONE
             viewCustomError.root.visibility = View.VISIBLE
             viewCustomError.textErrorMessage.text = message
         }

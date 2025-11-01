@@ -96,7 +96,7 @@ class GamesBottomSheetFragment : BottomSheetDialogFragment() {
 
     private fun showLoadingState() {
         binding.apply {
-            progressBar3.visibility = View.VISIBLE
+            loadingIndicatorGames.visibility = View.VISIBLE
             recyclerviewGames.visibility = View.GONE
             viewCustomError.root.visibility = View.GONE
         }
@@ -104,7 +104,7 @@ class GamesBottomSheetFragment : BottomSheetDialogFragment() {
 
     private fun showErrorState(message: String) {
         binding.apply {
-            progressBar3.visibility = View.GONE
+            loadingIndicatorGames.visibility = View.GONE
             recyclerviewGames.visibility = View.GONE
             viewCustomError.root.visibility = View.VISIBLE
             viewCustomError.textErrorMessage.text = message
@@ -113,7 +113,7 @@ class GamesBottomSheetFragment : BottomSheetDialogFragment() {
 
     private fun showGamesState(games: List<GameListItem>) {
         binding.apply {
-            progressBar3.visibility = View.GONE
+            loadingIndicatorGames.visibility = View.GONE
             recyclerviewGames.visibility = View.VISIBLE
             viewCustomError.root.visibility = View.GONE
         }

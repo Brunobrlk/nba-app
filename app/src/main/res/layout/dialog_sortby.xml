@@ -12,14 +12,14 @@
         app:icon="@drawable/ic_cancel_24px"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:contentDescription="@string/description_back" />
+        android:contentDescription="@string/desc_back" />
 
     <TextView
         android:id="@+id/textView7"
         style="@style/TextAppearance.App.TitleLarge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/sort_by_title"
+        android:text="@string/title_sort_by"
         app:layout_constraintBottom_toBottomOf="@+id/button_close"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -41,21 +41,21 @@
             style="?attr/materialButtonOutlinedStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/name_label" />
+            android:text="@string/label_name" />
 
         <Button
             android:id="@+id/button_by_city"
             style="?attr/materialButtonOutlinedStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/city_label" />
+            android:text="@string/label_city" />
 
         <Button
             android:id="@+id/button_by_conference"
             style="?attr/materialButtonOutlinedStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/conference_label" />
+            android:text="@string/label_conference" />
     </com.google.android.material.button.MaterialButtonToggleGroup>
 
     <View
@@ -88,7 +88,7 @@
             android:layout_marginEnd="16dp"
             android:checked="false"
             android:enabled="true"
-            android:text="@string/a_z_label" />
+            android:text="@string/label_a_z" />
 
         <RadioButton
             android:id="@+id/radiobutton_descending"
@@ -96,7 +96,7 @@
             android:layout_height="match_parent"
             android:checked="false"
             android:enabled="true"
-            android:text="@string/z_a_label" />
+            android:text="@string/label_z_a" />
     </RadioGroup>
 
     <TextView
@@ -116,7 +116,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="16dp"
-        android:text="@string/apply_text"
+        android:text="@string/action_apply"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
