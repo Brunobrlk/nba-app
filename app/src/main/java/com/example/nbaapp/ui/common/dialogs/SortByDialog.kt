@@ -10,7 +10,7 @@ import androidx.fragment.app.setFragmentResult
 import com.example.nbaapp.R
 import com.example.nbaapp.data.local.database.utils.SortTeamBy
 import com.example.nbaapp.databinding.DialogSortbyBinding
-import com.example.nbaapp.core.helpers.Constants
+import com.example.nbaapp.core.utils.Constants
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 class SortByDialog : DialogFragment() {

@@ -9,9 +9,9 @@ import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.PeriodicWorkRequest
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkerParameters
-import com.example.nbaapp.core.helpers.DebugUtils
-import com.example.nbaapp.core.helpers.onFailure
-import com.example.nbaapp.core.helpers.onSuccess
+import com.example.nbaapp.core.utils.DebugUtils
+import com.example.nbaapp.core.utils.onFailure
+import com.example.nbaapp.core.utils.onSuccess
 import com.example.nbaapp.domain.repository.GamesRepository
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject

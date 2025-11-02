@@ -3,7 +3,7 @@ package com.example.nbaapp.core.di
 import android.content.Context
 import androidx.room.Room
 import com.example.nbaapp.data.local.database.AppDatabase
-import com.example.nbaapp.core.helpers.Constants
+import com.example.nbaapp.core.utils.Constants
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

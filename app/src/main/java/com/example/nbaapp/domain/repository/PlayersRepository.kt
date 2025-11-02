@@ -8,9 +8,9 @@ import com.example.nbaapp.data.local.database.entities.PlayerEntity
 import com.example.nbaapp.data.mappers.asDomainList
 import com.example.nbaapp.data.mappers.asDomainModel
 import com.example.nbaapp.data.remote.RemotePlayersDataSource
-import com.example.nbaapp.core.helpers.DataError
-import com.example.nbaapp.core.helpers.Result
-import com.example.nbaapp.core.helpers.map
+import com.example.nbaapp.core.utils.DataError
+import com.example.nbaapp.core.utils.Result
+import com.example.nbaapp.core.utils.map
 import com.example.nbaapp.domain.models.Player
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow

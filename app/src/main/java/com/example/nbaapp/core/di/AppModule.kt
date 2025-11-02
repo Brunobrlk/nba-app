@@ -9,7 +9,7 @@ import com.example.nbaapp.data.local.LocalPlayersDataSource
 import com.example.nbaapp.data.local.LocalRemoteKeysDataSource
 import com.example.nbaapp.data.local.database.entities.PlayerEntity
 import com.example.nbaapp.data.remote.RemotePlayersDataSource
-import com.example.nbaapp.core.helpers.Constants
+import com.example.nbaapp.core.utils.Constants
 import com.example.nbaapp.data.mediators.PlayersRemoteMediator
 import dagger.Module
 import dagger.Provides

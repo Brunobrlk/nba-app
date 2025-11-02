@@ -10,9 +10,9 @@ import androidx.paging.TerminalSeparatorType
 import androidx.paging.cachedIn
 import androidx.paging.insertHeaderItem
 import androidx.paging.map
-import com.example.nbaapp.core.helpers.DataError
-import com.example.nbaapp.core.helpers.onFailure
-import com.example.nbaapp.core.helpers.onSuccess
+import com.example.nbaapp.core.utils.DataError
+import com.example.nbaapp.core.utils.onFailure
+import com.example.nbaapp.core.utils.onSuccess
 import com.example.nbaapp.data.mediators.DataErrorException
 import com.example.nbaapp.domain.models.Player
 import com.example.nbaapp.domain.models.PlayerListItem

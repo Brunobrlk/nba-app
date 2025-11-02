@@ -1,8 +1,7 @@
 package com.example.nbaapp.data.remote.utils
 
-import com.example.nbaapp.core.helpers.DataError
-import com.example.nbaapp.core.helpers.DebugUtils
-import com.example.nbaapp.core.helpers.Result
+import com.example.nbaapp.core.utils.DataError
+import com.example.nbaapp.core.utils.Result
 import kotlinx.coroutines.ensureActive
 import retrofit2.Response
 import java.net.SocketTimeoutException

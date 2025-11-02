@@ -58,5 +58,5 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/textview_col3_item"
         app:layout_constraintTop_toTopOf="@+id/textview_col3_item"
-        android:contentDescription="@string/desc_back" />
+        android:contentDescription="@string/desc_back_button" />
 </androidx.constraintlayout.widget.ConstraintLayout>

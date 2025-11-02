@@ -1,4 +1,4 @@
-package com.example.nbaapp.core.helpers
+package com.example.nbaapp.core.utils
 
 sealed interface DataError : Error {
     enum class Remote : DataError {

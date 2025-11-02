@@ -10,7 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.nbaapp.data.local.database.utils.SortTeamBy
 import com.example.nbaapp.databinding.FragmentTeamsBinding
-import com.example.nbaapp.core.helpers.Constants
+import com.example.nbaapp.core.utils.Constants
 import com.example.nbaapp.domain.models.Team
 import com.example.nbaapp.domain.models.TeamListItem
 import com.example.nbaapp.ui.common.dialogs.SortByDialog

@@ -4,8 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.nbaapp.core.helpers.onFailure
-import com.example.nbaapp.core.helpers.onSuccess
+import com.example.nbaapp.core.utils.onFailure
+import com.example.nbaapp.core.utils.onSuccess
 import com.example.nbaapp.domain.models.Game
 import com.example.nbaapp.domain.models.GameListItem
 import com.example.nbaapp.domain.repository.Games

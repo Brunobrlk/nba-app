@@ -2,7 +2,7 @@ package com.example.nbaapp.ui.common
 
 import android.content.Context
 import com.example.nbaapp.R
-import com.example.nbaapp.core.helpers.DataError
+import com.example.nbaapp.core.utils.DataError
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 import javax.inject.Singleton

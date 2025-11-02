@@ -1,8 +1,8 @@
 package com.example.nbaapp.domain.repository
 
 import com.example.nbaapp.data.local.database.utils.SortTeamBy
-import com.example.nbaapp.core.helpers.DataError
-import com.example.nbaapp.core.helpers.Result
+import com.example.nbaapp.core.utils.DataError
+import com.example.nbaapp.core.utils.Result
 import com.example.nbaapp.domain.models.Team
 
 interface Teams {

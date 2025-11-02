@@ -5,7 +5,7 @@ import androidx.startup.Initializer
 import androidx.work.Configuration
 import androidx.work.WorkManager
 import com.example.nbaapp.core.di.WorkManagerEntryPoint
-import com.example.nbaapp.core.helpers.DebugUtils
+import com.example.nbaapp.core.utils.DebugUtils
 import dagger.hilt.android.EntryPointAccessors
 
 class HiltWorkManagerInitializer : Initializer<Unit> {

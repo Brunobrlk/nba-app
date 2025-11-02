@@ -4,9 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.nbaapp.core.helpers.onFailureWithCache
-import com.example.nbaapp.core.helpers.onFailure
-import com.example.nbaapp.core.helpers.onSuccess
+import com.example.nbaapp.core.utils.onFailureWithCache
+import com.example.nbaapp.core.utils.onFailure
+import com.example.nbaapp.core.utils.onSuccess
 import com.example.nbaapp.data.local.database.utils.SortTeamBy
 import com.example.nbaapp.domain.models.Team
 import com.example.nbaapp.domain.models.TeamListItem

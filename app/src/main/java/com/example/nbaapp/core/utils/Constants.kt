@@ -1,4 +1,4 @@
-package com.example.nbaapp.core.helpers
+package com.example.nbaapp.core.utils
 
 object Constants {
     const val NBA_BASE_URL = "https://api.balldontlie.io/v1/"

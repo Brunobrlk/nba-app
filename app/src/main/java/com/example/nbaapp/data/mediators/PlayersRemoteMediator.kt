@@ -10,8 +10,8 @@ import com.example.nbaapp.data.local.database.entities.PlayerEntity
 import com.example.nbaapp.data.local.database.entities.RemoteKeyEntity
 import com.example.nbaapp.data.mappers.asEntityList
 import com.example.nbaapp.data.remote.RemotePlayersDataSource
-import com.example.nbaapp.core.helpers.Constants
-import com.example.nbaapp.core.helpers.getOrElse
+import com.example.nbaapp.core.utils.Constants
+import com.example.nbaapp.core.utils.getOrElse
 import javax.inject.Inject
 
 @OptIn(ExperimentalPagingApi::class)
