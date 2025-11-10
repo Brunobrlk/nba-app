@@ -12,7 +12,7 @@
         app:icon="@drawable/ic_cancel_24px"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:contentDescription="@string/desc_back_button" />
+        android:contentDescription="@string/desc_dismiss_games" />
 
     <TextView
         android:id="@+id/textView7"

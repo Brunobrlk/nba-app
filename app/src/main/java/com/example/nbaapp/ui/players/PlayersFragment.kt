@@ -10,7 +10,9 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import androidx.transition.TransitionManager
+import com.example.nbaapp.R
 import com.example.nbaapp.core.utils.DebugUtils
+import com.example.nbaapp.core.utils.viewBinding
 import com.example.nbaapp.databinding.FragmentPlayersBinding
 import com.example.nbaapp.ui.common.adapter.LoadingAdapter
 import com.example.nbaapp.ui.players.adapter.OnPlayerClick
@@ -22,20 +24,15 @@ import kotlinx.coroutines.launch
 
 
 @AndroidEntryPoint
-class PlayersFragment : Fragment(), OnPlayerClick {
-    private lateinit var binding: FragmentPlayersBinding
+class PlayersFragment : Fragment(R.layout.fragment_players), OnPlayerClick {
+    private val binding: FragmentPlayersBinding by viewBinding(FragmentPlayersBinding::bind)
     private lateinit var playersAdapter: PlayersAdapter
     private val viewModel: PlayersViewModel by viewModels()
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        binding = FragmentPlayersBinding.inflate(inflater, container, false)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         initViews()
         initListeners()
-        return binding.root
     }
 
     override fun onPlayerClick(teamId: Int, teamName: String) =

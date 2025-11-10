@@ -11,11 +11,13 @@ import com.example.nbaapp.R
 import com.example.nbaapp.data.local.database.utils.SortTeamBy
 import com.example.nbaapp.databinding.DialogSortbyBinding
 import com.example.nbaapp.core.utils.Constants
+import com.example.nbaapp.core.utils.viewBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 class SortByDialog : DialogFragment() {
+    private val binding: DialogSortbyBinding by viewBinding(DialogSortbyBinding::inflate)
+
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val binding = DialogSortbyBinding.inflate(layoutInflater)
         binding.apply {
             buttonClose.setOnClickListener {
                 dismiss()

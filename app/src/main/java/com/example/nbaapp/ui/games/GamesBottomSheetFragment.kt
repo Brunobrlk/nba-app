@@ -2,13 +2,13 @@ package com.example.nbaapp.ui.games
 
 import android.content.res.Resources
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.example.nbaapp.R
+import com.example.nbaapp.core.utils.viewBinding
 import com.example.nbaapp.databinding.BottomsheetGamesBinding
 import com.example.nbaapp.domain.models.GameListItem
 import com.example.nbaapp.ui.common.setTextOrDash
@@ -20,9 +20,9 @@ import com.google.android.material.transition.MaterialSharedAxis
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class GamesBottomSheetFragment : BottomSheetDialogFragment() {
+class GamesBottomSheetFragment : BottomSheetDialogFragment(R.layout.bottomsheet_games) {
 
-    private lateinit var binding: BottomsheetGamesBinding
+    private val binding: BottomsheetGamesBinding by viewBinding(BottomsheetGamesBinding::bind)
     private lateinit var gamesAdapter: GamesAdapter
     private val viewModel: GamesViewModel by viewModels()
     private val args: GamesBottomSheetFragmentArgs by navArgs()
@@ -60,13 +60,6 @@ class GamesBottomSheetFragment : BottomSheetDialogFragment() {
 
         }
         return dialog
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-    ): View {
-        binding = BottomsheetGamesBinding.inflate(inflater, container, false)
-        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

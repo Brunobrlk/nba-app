@@ -8,9 +8,11 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.example.nbaapp.R
 import com.example.nbaapp.data.local.database.utils.SortTeamBy
 import com.example.nbaapp.databinding.FragmentTeamsBinding
 import com.example.nbaapp.core.utils.Constants
+import com.example.nbaapp.core.utils.viewBinding
 import com.example.nbaapp.domain.models.Team
 import com.example.nbaapp.domain.models.TeamListItem
 import com.example.nbaapp.ui.common.dialogs.SortByDialog
@@ -19,20 +21,15 @@ import com.example.nbaapp.ui.teams.adapter.TeamsAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class TeamsFragment : Fragment(), OnTeamClick {
+class TeamsFragment : Fragment(R.layout.fragment_teams), OnTeamClick {
+    private val binding: FragmentTeamsBinding by viewBinding(FragmentTeamsBinding::bind)
     private lateinit var teamsAdapter: TeamsAdapter
-    private lateinit var binding: FragmentTeamsBinding
     private val viewModel: TeamsViewModel by viewModels()
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        binding = FragmentTeamsBinding.inflate(inflater, container, false)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         initViews()
         initListeners()
-        return binding.root
     }
 
     private fun initListeners() {

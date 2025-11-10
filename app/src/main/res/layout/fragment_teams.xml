@@ -60,6 +60,7 @@
         tools:listitem="@layout/item_player" />
 
     <com.google.android.material.loadingindicator.LoadingIndicator
+        style="@style/Widget.Material3.LoadingIndicator"
         android:id="@+id/loading_indicator_teams"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
