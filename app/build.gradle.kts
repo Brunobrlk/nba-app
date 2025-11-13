@@ -79,7 +79,7 @@ dependencies {
 
     // Retrofit
     implementation(libs.retrofit)
-    implementation(libs.gson)
+    implementation(libs.converter.moshi)
     implementation(libs.logging.interceptor)
 
     // Room Database

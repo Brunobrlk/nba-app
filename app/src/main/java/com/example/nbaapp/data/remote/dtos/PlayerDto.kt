@@ -1,13 +1,13 @@
 package com.example.nbaapp.data.remote.dtos
 
-import com.google.gson.annotations.SerializedName
+import com.squareup.moshi.Json
 
 data class PlayerDto(
-    @SerializedName("id") val id: Int,
+    @Json(name = "id") val id: Int,
 
-    @SerializedName("first_name") val firstName: String,
+    @Json(name = "first_name") val firstName: String,
 
-    @SerializedName("last_name") val lastName: String,
+    @Json(name = "last_name") val lastName: String,
 
-    @SerializedName("team") val team: TeamDto
+    @Json(name = "team") val team: TeamDto
 )

@@ -1,9 +1,9 @@
 package com.example.nbaapp.data.remote.dtos
 
-import com.google.gson.annotations.SerializedName
+import com.squareup.moshi.Json
 
 data class MetaDto(
-    @SerializedName("prev_cursor") val previousCursor: Int?,
-    @SerializedName("next_cursor") val nextCursor: Int?,
-    @SerializedName("per_page") val perPage: Int?,
+    @Json(name = "prev_cursor") val previousCursor: Int?,
+    @Json(name = "next_cursor") val nextCursor: Int?,
+    @Json(name = "per_page") val perPage: Int?,
 )
