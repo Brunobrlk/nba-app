@@ -1,14 +1,6 @@
-# NbaApp - Study Case
+# NbaApp - Test
 
 Nba android app using kotlin + MVVM, Material3, View Binding, Live Data, Room, Retrofit + Moshi, Paging(Network/Database Pagination), Coroutines, DaggerHilt, Firebase(Analytics, Crashlytics, RemoteConfig, Performance), AdMob, Navigation UI + SafeArgs, Startup Library, WorkManager and SplashScreen Lib.
-
-## Screenshots
-
-### Teams
-
-### Players
-
-### Filter
 
 ## Features
 
